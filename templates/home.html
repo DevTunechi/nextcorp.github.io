@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Home page" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='images/NextCorp_favicon.png') }}" type="image/x-icon" />
+    <title>NextCorp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet" />
+    <script src="{{ url_for('logout.static', filename='scripts/usr_logout.js') }}" defer></script>
+</head>
+
+<body class="main-page">
+    <aside class="sidebar">
+        <header class="sidebar-header">
+            <h1>NextCorp</h1>
+        </header>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="{{ url_for('home_page') }}">
+                        <img class="nav-icon" src="{{ url_for('static', filename='images/home_icon.png') }}" alt="dashboard-icon">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img class="nav-icon" src="{{ url_for('static', filename='images/history_icon.png') }}" alt="history-icon">
+                        History
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('employee_profile.view_profile', employee_id=employee_id) }}">
+                        <img class="nav-icon" src="{{ url_for('static', filename='images/profile_icon.png') }}" alt="profile-icon">
+                        Profile
+                    </a>
+                </li>
+		            <li>
+              <button id="logoutBtn">
+		      <img class="nav-icon" src="{{ url_for('static', filename='images/logout_icon.png') }}" alt="logout-icon">
+	      </button>
+            </li>
+            </ul>
+        </nav>
+    </aside>
+    <div class="home-page">
+        <p>Home</p>
+        <h1 class="welcome-note">Welcome back, {{ session.get('employee_name', '') }}!</h1>
+        <div class="home-page-container">
+            <div class="check-io">
+                <h4 class="sub-header">
+                    <img class="header-icon" src="{{ url_for('static', filename='images/check_in_out_icon.png') }}" alt="check-in/out_icon">
+		    Check In
+		</h4>
+		<!--
+		<p>
+		Last Check-in: {{ session.get('last_checkin', {}).get('checkin', '') }}
+		<br />
+		Last Checkout: {{ session.get('last_checkin', {}).get('checkout', '') }}</p>
+		<h1>Employee Check-in/Check-out Times<br/>
+			{{ session.get('employee_id') }}</h1>
+		-->
+    <div id="checkers"></div>
+    <script>
+        const employeeId = "{{ session['employee_id'] }}";
+    </script>
+    <script src="{{ url_for('static', filename='scripts/checker_data.js') }}" defer>
+    </script>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

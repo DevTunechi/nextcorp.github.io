@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('dashboard.static', filename='css/dash.css') }}">
+    <script src="{{ url_for('dashboard.static', filename='scripts/dashboard_operations.js') }}" defer></script>
+    <script src="{{ url_for('logout.static', filename='scripts/logout.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>NextCorp - Dashboard</h1>
+    </header>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('dashboard.add_employee') }}">Add Employee</a></li>
+            <li><a href="{{ url_for('dashboard.dashboard_page') }}">Display Employees</a></li>
+	    <li>
+	      <button id="logoutBtn">Logout</button>
+	    </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="container">
+
+            <!-- Flash messages display -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Add Employee Form -->
+            {% if action == "add" %}
+                <h3>Add Employee</h3>
+                <form method="POST" action="{{ url_for('dashboard.add_employee') }}">
+                    <input type="text" name="name" placeholder="Name" required><br>
+                    <input type="email" name="email" placeholder="Email" required><br>
+                    <input type="password" name="passwd" placeholder="Password" required><br>
+                    <input type="text" name="birth_date" placeholder="Birth Date (YYYY-MM-DD)" required><br>
+                    <input type="text" name="card_id_number" placeholder="Card ID Number" required><br>
+                    <input type="text" name="phone_number" placeholder="Phone Number" required><br>
+                    <input type="checkbox" id="is_hr" name="is_hr" onclick="updateCorpPosition()"> Is HR?<br>
+                    <input type="text" id="corp_position" name="corp_position" placeholder="Position"><br>
+                    <input type="text" name="joined_date" placeholder="Joined Date (YYYY-MM-DD)" required><br>
+                    <input type="text" name="expiry_date" placeholder="Expiry Date (YYYY-MM-DD)"><br>
+                    <button type="submit">Add Employee</button>
+                </form>
+            {% endif %}
+
+            <!-- Update Employee Form -->
+            {% if action == "update" and update_employee %}
+                <h3>Update Employee</h3>
+                <form method="POST" action="{{ url_for('dashboard.update_employee', employee_id=update_employee.id) }}">
+                    <input type="text" name="name" value="{{ update_employee.name }}" placeholder="Name" required><br>
+                    <input type="email" name="email" value="{{ update_employee.email }}" placeholder="Email" required><br>
+                    <input type="password" name="passwd" value="{{ update_employee.passwd }}" placeholder="Password" required><br>
+                    <input type="date" name="birth_date" value="{{ update_employee.birth_date[:10] }}" placeholder="Birth Date" required><br>
+                    <input type="text" name="card_id_number" value="{{ update_employee.card_id_number }}" placeholder="Card ID Number" required><br>
+                    <input type="text" name="phone_number" value="{{ update_employee.phone_number }}" placeholder="Phone Number" required><br>
+                    <input type="checkbox" id="is_hr" name="is_hr" {% if update_employee.is_hr %}checked{% endif %} onclick="updateCorpPosition()"> Is HR?<br>
+                    <input type="date" name="joined_date" value="{{ update_employee.joined_date[:10] }}" placeholder="Joined Date" required><br>
+                    <input type="date" id="expiry_date" name="expiry_date" value="{% if update_employee.expiry_date %}{{ update_employee.expiry_date[:10] }}{% endif %}"><br>
+                    <input type="text" id="corp_position" name="corp_position" value="{{ update_employee.corp_position }}" placeholder="Position"><br>
+                    <button type="submit">Update Employee</button>
+                </form>
+            {% endif %}
+
+            <!-- Employees List -->
+            {% if action == "list" %}
+                <h3>Employees</h3>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                    {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee.id }}</td>
+                        <td>{{ employee.name }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td>
+			    <div class="action-buttons">
+                            <a class="button" href="{{ url_for('dashboard.update_employee', employee_id=employee.id) }}">Update</a>
+                            <button class="button" onclick="deleteEmployee('{{ employee.id }}')">Delete</button>
+                            </div>
+			</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <p>NextCorp &copy; 2024 - Dashboard</p>
+    </footer>
+</body>
+</html>

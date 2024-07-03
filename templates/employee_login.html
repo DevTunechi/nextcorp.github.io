@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Employee login to NextCorp." />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('employee_login.static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('employee_login.static', filename='images/NextCorp_favicon.png') }}" type="image/x-icon" />
+    <title>NextCorp - Employee Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <h1>NextCorp</h1>
+    </header>
+    <!-- Form -->
+    <section class="main-content">
+        <form class="sign-in-form" method="POST" action="{{ url_for('employee_login.login_page') }}">
+            <div class="form-header">
+                <img class="account-icon" src="{{ url_for('employee_login.static', filename='images/account_icon.png') }}" alt="User Account Icon">
+            </div>
+            <div class="form-body">
+                <!-- Flash messages display -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- Employee ID input -->
+                <input type="text" name="employee_id" id="employee_id" placeholder="Employee ID" required>
+
+                <!-- Password input -->
+                <input type="password" name="password" placeholder="Password" required>
+
+                <!-- Submit button -->
+                <button type="submit">Sign In</button>
+
+                <!-- Forgot password link
+                <p>Forgot Password?</p>
+		<p><button type="button" class="link-button" id="reset-password-link">Reset Password</button></p> -->
+            </div>
+        </form>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <hr>
+        <p>Copyright &copy; NextCorp 2024</p>
+    </footer>
+</body>
+</html>

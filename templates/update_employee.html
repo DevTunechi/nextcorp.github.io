@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Employee</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ employee.name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ employee.email }}" required>
+            </div>
+            <div class="form-group">
+                <label for="passwd">Password</label>
+                <input type="password" class="form-control" id="passwd" name="passwd" value="{{ employee.passwd }}" required>
+            </div>
+            <div class="form-group">
+                <label for="birth_date">Birth Date</label>
+                <input type="date" class="form-control" id="birth_date" name="birth_date" value="{{ employee.birth_date }}" required>
+            </div>
+            <div class="form-group">
+                <label for="card_id_number">Card ID Number</label>
+                <input type="text" class="form-control" id="card_id_number" name="card_id_number" value="{{ employee.card_id_number }}">
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ employee.phone_number }}">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="is_hr" name="is_hr" {% if employee.is_hr %} checked {% endif %}>
+                <label class="form-check-label" for="is_hr">Is HR?</label>
+            </div>
+            <div class="form-group">
+                <label for="joined_date">Joined Date</label>
+                <input type="date" class="form-control" id="joined_date" name="joined_date" value="{{ employee.joined_date }}" required>
+            </div>
+            <div class="form-group">
+    		<label for="expiry_date">Expiry Date</label>
+    		<input type="date" name="expiry_date" value="{% if update_employee and update_employee.expiry_date %}{{ update_employee.expiry_date[:10] }}{% endif %}" placeholder="Expiry Date"><br>
+	    </div>
+            <div class="form-group">
+                <label for="corp_position">Corporate Position</label>
+                <input type="text" class="form-control" id="corp_position" name="corp_position" value="{{ employee.corp_position }}">
+            </div>
+            <button type="submit" class="btn">Update Employee</button>
+        </form>
+    </div>
+</body>
+</html>

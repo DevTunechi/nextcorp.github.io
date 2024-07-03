@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Employee Profile Manager">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('employee_profile.static', filename='css/profile.css') }}" />
+    <link rel="icon" href="{{ url_for('employee_profile.static', filename='images/NextCorp_favicon.png') }}" type="image/x-icon" />
+    <title>NextCorp</title>
+    <!-- Import nunito sans font family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <script src="{{ url_for('logout.static', filename='scripts/usr_logout.js') }}" defer></script>
+</head>
+<body class="main-page">
+    <aside class="sidebar">
+        <header class="sidebar-header">
+            <h1>NextCorp</h1>
+        </header>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="{{ url_for('home_page') }}">
+                        <img class="nav-icon" src="{{ url_for('employee_profile.static', filename='images/home_icon.png') }}" alt="dashboard-icon">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="history.html">
+                        <img class="nav-icon" src="{{ url_for('employee_profile.static', filename='images/history_icon.png') }}" alt="history-icon">
+                        History
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('employee_profile.profile_page') }}">
+                        <img class="nav-icon" src="{{ url_for('employee_profile.static', filename='images/profile_icon.png') }}" alt="profile-icon">
+                        Profile
+                    </a>
+                </li>
+                <li>
+		<!--
+                    <a href="logout.html">
+                        <img class="nav-icon" src="{{ url_for('employee_profile.static', filename='images/logout_icon.png') }}" alt="logout-icon">
+                        Logout
+                    </a>
+		-->
+	       <a id="logoutBtn" class="hover-button">
+                      <img class="nav-icon" src="{{ url_for('static', filename='images/logout_icon.png') }}" alt="logout-icon">
+              	Logout
+	       </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="profile_page">
+        <p>My Profile</p>
+        <h1 class="welcome-note">{{ employee_data.name }}</h1>
+        <div class="profile-container">
+            <div class="my-profile-content">
+                <img class="profile-pic" src="{{ url_for('employee_profile.static', filename='images/account_icon.png') }}" alt="profile-icon">
+                <h3>Profile Information</h3>
+                <p>Employee ID: {{ employee_data.id }}</p>
+                <p>Name: {{ employee_data.name }}</p>
+                <p>Email: {{ employee_data.email }}</p>
+                <p>Birth Date: {{ employee_data.birth_date }}</p>
+                <p>Card ID Number: {{ employee_data.card_id_number }}</p>
+                <p>Phone Number: {{ employee_data.phone_number }}</p>
+		<!-- Will be adding more data here(this is just for MVP) -->
+            </div>
+
+            <div class="edit-profile-content">
+                <h4 class="sub-header">
+                    <img class="header-icon" src="{{ url_for('employee_profile.static', filename='images/edit_icon.png') }}" alt="edit_icon">
+                    Edit Profile
+                </h4>
+                <form class="sign-up-form" method="POST" action="{{ url_for('employee_profile.profile_page') }}">
+                    <div class="form-body">
+                        <input type="text" name="name" placeholder="Full Name" value="{{ employee_data.name }}" required>
+                        <input type="email" name="email" placeholder="Email" value="{{ employee_data.email }}" required>
+                        <input type="tel" name="phone_number" placeholder="Phone Number" value="{{ employee_data.phone_number }}" required>
+                        <input type="text" name="card_id_number" placeholder="Card ID Number" value="{{ employee_data.card_id_number }}" required>
+                        <input type="password" name="passwd" placeholder="Password" required>
+                        <input type="date" name="birth_date" placeholder="Birth Date" value="{{ employee_data.birth_date }}" required>
+                        <button type="submit" class="submit-button">Update</button>
+                        <button type="reset" class="cancel-button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
